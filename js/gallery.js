@@ -82,21 +82,17 @@ function createMarkup(arr) {
     .join("");
 }
 
-// console.log(createMarkup(images));
-
 containerUl.addEventListener("click", handleProductClick);
 function handleProductClick(event) {
   event.preventDefault();
-  if (event.target === event.currentTarget) {
+  if (!event.target.closest(".gallery-image")) {
     return;
   }
 
   const instance = basicLightbox.create(
     `
 	<div class="modal">
-        <img
-        class="#"
-        src="${event.target.dataset.source}"
+        <img src="${event.target.dataset.source}"
         alt="${event.target.alt}"
        width="800" 
       />
@@ -110,10 +106,11 @@ function handleProductClick(event) {
       },
     }
   );
-  instance.show();
+
   function modalClose(event) {
     if (event.code === "Escape") {
       instance.close();
     }
   }
+  instance.show();
 }
